@@ -131,20 +131,22 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
 controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
 
-    var options = {};
+    var messageText = message.text;
 
-    options.token = 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8';
-    options.ts = message.ts;
-    options.channel = message.channel;
-    options.as_user = true;
+    var options = {
+      token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+      ts: message.ts,
+      channel: message.channel,
+      as_user: true
+    };
+
 
     bot.api.chat.delete(options, function(err, response) {
-      console.log(options);
+      console.log(response);
       if (err) {
         console.log(err);
       } else {
-        console.log(response);
-        console.log('deleted message: ' + message);
+        console.log('Attempting to delete the message: ' + messageText);
       }
     });
   }
