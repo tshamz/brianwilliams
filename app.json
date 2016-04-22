@@ -1,0 +1,14 @@
+{
+  "name": "Son of Brian Williams",
+  "description": "Annoys his dad by asking stupid questions, hanging out with his \"idiot friends\", and deciding to major in art history.",
+  "website": "http://tylershambora.com",
+  "repository": "https://github.com/tshamz/son-of-brianwilliams",
+  "logo": "http://tylershambora.com/images/father-williams.jpg",
+  "success_url": "/oauth",
+  "keywords": [
+      "slack",
+      "botkit",
+      "node",
+      "feel- the bern"
+  ]
+}

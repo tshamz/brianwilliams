@@ -1,0 +1,30 @@
+{
+  "name": "son-of-brianwilliams",
+  "version": "1.0.0",
+  "description": "Second time's a charm...right guys???",
+  "main": "brianwilliams-v2.js",
+  "dependencies": {
+    "botkit": "0.0.15",
+    "moment": "^2.12.0",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tshamz/son-of-brianwilliams.git"
+  },
+  "keywords": [
+    "flat-screen",
+    "tvs",
+    "bow-staffs"
+  ],
+  "author": "tshamz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tshamz/son-of-brianwilliams/issues"
+  },
+  "homepage": "https://github.com/tshamz/son-of-brianwilliams#readme"
+}
