@@ -6,7 +6,7 @@ var Botkit               = require('botkit');
 var responses            = require('./responses.js');
 
 var whitelistedUsers     = ['tyler shambora', 'daniel lerman'];
-var readOnlyChannels     = ['C0XLCLA3X'];
+var readOnlyChannels     = ['C1317518C'];
 
 
 
