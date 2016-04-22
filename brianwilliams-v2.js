@@ -49,18 +49,6 @@ bot.startRTM(function(err) {
 
 
 
-// Event Listeners ===============================================
-
-controller.on('rtm_open', function(bot) {
-  console.log('** The RTM api just connected: ' + bot.identity.name);
-});
-
-controller.on('rtm_close', function() {
-  console.log('** The RTM api just closed');
-});
-
-
-
 // Helper Functions ===============================================
 
 var getRealNameFromId = function(bot, userId) {
@@ -92,7 +80,7 @@ var isValidUser = function(realName) {
 };
 
 
-// Listeners  ===============================================
+// Message Listeners  ===============================================
 
 controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, message) {
 
@@ -131,29 +119,6 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
   });
 });
 
-controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
-  if (readOnlyChannels.indexOf(message.channel) !== -1) {
-
-    var messageText = message.text;
-
-    var options = {
-      token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
-      ts: message.ts,
-      channel: message.channel,
-      as_user: true
-    };
-
-    bot.api.chat.delete(options, function(err, response) {
-      console.log(response);
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Attempting to delete the message: ' + messageText);
-      }
-    });
-  }
-});
-
 controller.hears(['hello', 'hi'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
   var validateName = getRealNameFromId(bot, message.user);
   bot.reply(message, 'Hello!');
@@ -162,16 +127,70 @@ controller.hears(['hello', 'hi'], ['direct_message', 'mention', 'direct_mention'
   }
 });
 
+// controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
+//   if (readOnlyChannels.indexOf(message.channel) !== -1) {
+//     var messageText = message.text;
+//     var options = {
+//       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+//       ts: message.ts,
+//       channel: message.channel,
+//       as_user: true
+//     };
+
+//     bot.api.chat.delete(options, function(err, response) {
+//       console.log(response);
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log('Attempting to delete the message: ' + messageText);
+//       }
+//     });
+//   }
+// });
+
+
+
+// Event Listeners ===============================================
+
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
-    name: 'bobross'
+    name: 'shakabra'
   }, function(err) {
     if (err) {
       console.log(err);
     }
-    bot.reply(message, 'happy little trees...');
+    bot.reply(message, 'shaka brah');
   });
 });
 
+controller.on('message', function(bot, message) {
+  if (readOnlyChannels.indexOf(message.channel) !== -1) {
+    var messageText = message.text;
+    var options = {
+      token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+      ts: message.ts,
+      channel: message.channel,
+      as_user: true
+    };
+
+    console.log('Attempting to delete the message: ' + messageText);
+
+    bot.api.chat.delete(options, function(err, response) {
+      if (err) {
+        console.log('Unable to delete due error: ' + err);
+      } else {
+        console.log('Message successfully deleted');
+      }
+    });
+  }
+});
+
+controller.on('rtm_open', function(bot) {
+  console.log('** The RTM api just connected: ' + bot.identity.name);
+});
+
+controller.on('rtm_close', function() {
+  console.log('** The RTM api just closed');
+});
