@@ -22,6 +22,16 @@ var controller = Botkit.slackbot({
   logLevel: 6
 });
 
+controller.configureSlackApp({
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  scopes: ['bot']
+});
+
+controller.setupWebserver(process.env.PORT, function(err, webserver) {
+  controller.createHomepageEndpoint(controller.webserver);
+});
+
 var bot = controller.spawn({
   token: process.env.BOT_TOKEN
 }).startRTM(function(err, bot, payload) {
