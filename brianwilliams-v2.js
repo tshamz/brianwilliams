@@ -34,12 +34,14 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
 
 var bot = controller.spawn({
   token: process.env.BOT_TOKEN
-}).startRTM(function(err) {
+});
+
+bot.startRTM(function(err) {
   if (err) {
     console.log('Even if you fall on your face, you\'re still moving forward.');
     throw new Error(err);
   }
-  console.log(bot);
+  console.log(Botkit);
 });
 
 
@@ -129,6 +131,9 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
 controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
 
+    console.log(message);
+
+    var token = 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8';
     var options = {};
 
     bot.api.chat.delete(options, function(err, response) {
