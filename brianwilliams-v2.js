@@ -165,7 +165,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
   });
 });
 
-controller.on('message', function(bot, message) {
+controller.on('message_received', function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
     var messageText = message.text;
     var options = {
