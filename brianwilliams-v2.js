@@ -34,12 +34,12 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
 
 var bot = controller.spawn({
   token: process.env.BOT_TOKEN
-}).startRTM(function(err, bot, payload) {
+}).startRTM(function(err) {
   if (err) {
-    console.log('Error connecting bot to Slack: ', err);
+    console.log('Even if you fall on your face, you\'re still moving forward.');
     throw new Error(err);
   }
-  console.log('Even if you fall on your face, you\'re still moving forward. Never forget it.');
+  console.log(bot);
 });
 
 
@@ -159,10 +159,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     if (err) {
       console.log(err);
     }
-    bot.reply(message, 'I heard you loud and clear boss.');
+    bot.reply(message, 'happy little trees...');
   });
 });
 
-controller.on('slash_command', function(bot, message) {
-  bot.replyPublic(message,'oh wow, <@' + message.user + '> used one of my slash commands. really. cool.');
-});
