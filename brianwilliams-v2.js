@@ -29,6 +29,9 @@ controller.configureSlackApp({
 });
 
 controller.setupWebserver(process.env.PORT, function(err, webserver) {
+  if (err) {
+    throw new Error(err);
+  }
   controller.createHomepageEndpoint(controller.webserver);
 });
 
@@ -139,7 +142,6 @@ controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
       channel: message.channel,
       as_user: true
     };
-
 
     bot.api.chat.delete(options, function(err, response) {
       console.log(response);
