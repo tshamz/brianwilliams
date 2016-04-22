@@ -143,12 +143,24 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
       as_user: true
     };
 
+    console.log('Attempting to delete the message: ' + messageText);
+
     bot.api.chat.delete(options, function(err, response) {
       console.log(response);
       if (err) {
-        console.log(err);
+        console.log('Unable to delete due error: ' + err);
+        console.log('Trying again in 2 seconds with these options: ' + options);
+        setTimeout(function() {
+          bot.api.chat.delete(options, function(err, response) {
+            if (err) {
+              console.log('no good, let\'s bail.');
+            } else {
+              console.log('second times a charm!');
+            }
+          });
+        }, 2000);
       } else {
-        console.log('Attempting to delete the message: ' + messageText);
+        console.log('Message successfully deleted');
       }
     });
   }
