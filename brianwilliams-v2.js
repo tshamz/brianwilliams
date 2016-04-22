@@ -165,9 +165,14 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
   });
 });
 
-controller.on('ambient', function(bot, message) {
-  console.log(message);
+// controller.on('ambient', function(bot, message) {
+
+controller.on('message_received', function(bot, message) {
+
+  console.log('The supplied message param looks like: ' + message);
+
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
+
     var messageText = message.text;
     var options = {
       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
@@ -181,6 +186,18 @@ controller.on('ambient', function(bot, message) {
     bot.api.chat.delete(options, function(err, response) {
       if (err) {
         console.log('Unable to delete due error: ' + err);
+        console.log('Let\'s try again in 2 seconds.');
+        console.log('Also, let\'s check out our options object');
+        console.log(options)
+        setTimeout(function() {
+          bot.api.chat.delete(options, function(err, response) {
+            if (err) {
+              console.log('not looking good...');
+            } else {
+              console.log('second times a charm!');
+            }
+          });
+        }, 2000);
       } else {
         console.log('Message successfully deleted');
       }
