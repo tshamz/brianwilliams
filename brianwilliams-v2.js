@@ -131,12 +131,15 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
 controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
 
-    console.log(message);
-
-    var token = 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8';
     var options = {};
 
+    options.token = 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8';
+    options.ts = message.ts;
+    options.channel = message.channel;
+    options.as_user = true;
+
     bot.api.chat.delete(options, function(err, response) {
+      console.log(options);
       if (err) {
         console.log(err);
       } else {
