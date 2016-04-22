@@ -127,26 +127,32 @@ controller.hears(['hello', 'hi'], ['direct_message', 'mention', 'direct_mention'
   }
 });
 
-// controller.hears([/[\s\S]*/], ['ambient'], function(bot, message) {
-//   if (readOnlyChannels.indexOf(message.channel) !== -1) {
-//     var messageText = message.text;
-//     var options = {
-//       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
-//       ts: message.ts,
-//       channel: message.channel,
-//       as_user: true
-//     };
+controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
 
-//     bot.api.chat.delete(options, function(err, response) {
-//       console.log(response);
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log('Attempting to delete the message: ' + messageText);
-//       }
-//     });
-//   }
-// });
+  console.log('does it match?');
+
+  if (readOnlyChannels.indexOf(message.channel) !== -1) {
+
+    console.log('yes it does.');
+
+    var messageText = message.text;
+    var options = {
+      token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+      ts: message.ts,
+      channel: message.channel,
+      as_user: true
+    };
+
+    bot.api.chat.delete(options, function(err, response) {
+      console.log(response);
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Attempting to delete the message: ' + messageText);
+      }
+    });
+  }
+});
 
 
 
@@ -165,43 +171,44 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
   });
 });
 
-controller.on('ambient', function(bot, message) {
 
-  console.log('The supplied message param looks like: ' + message);
+// controller.on('message_received', function(bot, message) {
 
-  if (readOnlyChannels.indexOf(message.channel) !== -1) {
+//   console.log('The supplied message param looks like: ' + message);
 
-    var messageText = message.text;
-    var options = {
-      token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
-      ts: message.ts,
-      channel: message.channel,
-      as_user: true
-    };
+//   if (readOnlyChannels.indexOf(message.channel) !== -1) {
 
-    console.log('Attempting to delete the message: ' + messageText);
+//     var messageText = message.text;
+//     var options = {
+//       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+//       ts: message.ts,
+//       channel: message.channel,
+//       as_user: true
+//     };
 
-    bot.api.chat.delete(options, function(err, response) {
-      if (err) {
-        console.log('Unable to delete due error: ' + err);
-        console.log('Let\'s try again in 2 seconds.');
-        console.log('Also, let\'s check out our options object');
-        console.log(options)
-        setTimeout(function() {
-          bot.api.chat.delete(options, function(err, response) {
-            if (err) {
-              console.log('not looking good...');
-            } else {
-              console.log('second times a charm!');
-            }
-          });
-        }, 2000);
-      } else {
-        console.log('Message successfully deleted');
-      }
-    });
-  }
-});
+//     console.log('Attempting to delete the message: ' + messageText);
+
+//     bot.api.chat.delete(options, function(err, response) {
+//       if (err) {
+//         console.log('Unable to delete due error: ' + err);
+//         console.log('Let\'s try again in 2 seconds.');
+//         console.log('Also, let\'s check out our options object');
+//         console.log(options)
+//         setTimeout(function() {
+//           bot.api.chat.delete(options, function(err, response) {
+//             if (err) {
+//               console.log('not looking good...');
+//             } else {
+//               console.log('second times a charm!');
+//             }
+//           });
+//         }, 2000);
+//       } else {
+//         console.log('Message successfully deleted');
+//       }
+//     });
+//   }
+// });
 
 controller.on('rtm_open', function(bot) {
   console.log('** The RTM api just connected: ' + bot.identity.name);
