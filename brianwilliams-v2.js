@@ -44,7 +44,6 @@ bot.startRTM(function(err) {
     console.log('Even if you fall on your face, you\'re still moving forward.');
     throw new Error(err);
   }
-  console.log(Botkit);
 });
 
 
@@ -80,10 +79,10 @@ var isValidUser = function(realName) {
 };
 
 
-// Message Listeners  ===============================================
+
+// Listeners  ===============================================
 
 controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, message) {
-
   var channelName = message.match[1];
   var update = message.match[2];
 
@@ -119,21 +118,18 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
   });
 });
 
-controller.hears(['hello', 'hi'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
+controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
   var validateName = getRealNameFromId(bot, message.user);
+
   bot.reply(message, 'Hello!');
+
   if (validateName) {
     bot.reply(message, 'Hey! You\'re pretty valid!');
   }
 });
 
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
-
-  console.log('does it match?');
-
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
-
-    console.log('yes it does.');
 
     var messageText = message.text;
     var options = {
@@ -145,30 +141,22 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
 
     console.log('Attempting to delete the message: ' + messageText);
 
+    // this whole block looks pretty ripe for some abstraction and recursion (tsham)
     bot.api.chat.delete(options, function(err, response) {
-      console.log(response);
-      if (err) {
-        console.log('Unable to delete due error: ' + err);
-        console.log('Trying again in 2 seconds with these options: ' + options);
+      if (!response.ok) {
+        console.log('Unable to delete due to error: ' + err);
+        console.log('Trying one more time in 2 seconds');
         setTimeout(function() {
           bot.api.chat.delete(options, function(err, response) {
-            if (err) {
-              console.log('no good, let\'s bail.');
-            } else {
-              console.log('second times a charm!');
+            if (!response.ok) {
+              console.log('Unable to delete after a second attempt due to error: ' + err);
             }
           });
         }, 2000);
-      } else {
-        console.log('Message successfully deleted');
       }
     });
   }
 });
-
-
-
-// Event Listeners ===============================================
 
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
   bot.api.reactions.add({
@@ -182,45 +170,6 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     bot.reply(message, 'shaka brah');
   });
 });
-
-
-// controller.on('message_received', function(bot, message) {
-
-//   console.log('The supplied message param looks like: ' + message);
-
-//   if (readOnlyChannels.indexOf(message.channel) !== -1) {
-
-//     var messageText = message.text;
-//     var options = {
-//       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
-//       ts: message.ts,
-//       channel: message.channel,
-//       as_user: true
-//     };
-
-//     console.log('Attempting to delete the message: ' + messageText);
-
-//     bot.api.chat.delete(options, function(err, response) {
-//       if (err) {
-//         console.log('Unable to delete due error: ' + err);
-//         console.log('Let\'s try again in 2 seconds.');
-//         console.log('Also, let\'s check out our options object');
-//         console.log(options)
-//         setTimeout(function() {
-//           bot.api.chat.delete(options, function(err, response) {
-//             if (err) {
-//               console.log('not looking good...');
-//             } else {
-//               console.log('second times a charm!');
-//             }
-//           });
-//         }, 2000);
-//       } else {
-//         console.log('Message successfully deleted');
-//       }
-//     });
-//   }
-// });
 
 controller.on('rtm_open', function(bot) {
   console.log('** The RTM api just connected: ' + bot.identity.name);
