@@ -165,9 +165,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
   });
 });
 
-// controller.on('ambient', function(bot, message) {
-
-controller.on('message_received', function(bot, message) {
+controller.on('ambient', function(bot, message) {
 
   console.log('The supplied message param looks like: ' + message);
 
