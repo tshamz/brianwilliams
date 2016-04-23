@@ -7,12 +7,7 @@ module.exports = {
       username: 'Brian Williams: Dev Team News Anchor',
       icon_url: bot.identity.profile_pic,
       text: '*I\'m about to post the following:*',
-      attachments: [{
-        fallback: 'Channel: *'+channelName+'*\nAttachment(s): *'+titles+'*',
-        text: 'Channel: *'+channelName+'*\nAttachment(s): *'+titles+'*',
-        color: '#ffffff',
-        mrkdwn_in: ['fallback', 'text']
-      }, {
+      attachments: [parsedMessages, {
         fallback: '*YES* to confirm',
         text: '*YES* to confirm',
         color: 'good',
