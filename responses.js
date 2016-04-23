@@ -7,7 +7,7 @@ module.exports = {
       username: 'Brian Williams: Dev Team News Anchor',
       icon_url: bot.identity.profile_pic,
       text: '*I\'m about to post the following:*',
-      attachments: [parsedMessages, {
+      attachments: parsedMessages.push({
         fallback: '*YES* to confirm',
         text: '*YES* to confirm',
         color: 'good',
@@ -17,7 +17,7 @@ module.exports = {
         text: '*NO* to abort',
         color: 'danger',
         mrkdwn_in: ['fallback', 'text']
-      }]
+      })
     };
   },
   yes: function(bot, channelName, parsedMessages, date) {
