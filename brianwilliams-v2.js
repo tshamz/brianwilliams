@@ -107,9 +107,17 @@ controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, me
     } else if (!validChannel) {
       return bot.reply(message, 'Sorry, I can\'t post to the channel: ' + channelName + '.');
     } else if (validUser && validChannel) {
+      var theDate = moment().format('dddd, MMMM Do YYYY');
       bot.startConversation(message, function(err, convo) {
-        convo.ask(responses.preview(bot, channelName, parsedMessages), [
-          responses.yes(bot, channelName, parsedMessages, moment().format('dddd, MMMM Do YYYY')),
+        convo.say('*I\'m about to post the following:*');
+        convo.say({
+          username: 'Brian Williams: Dev Team News Anchor',
+          icon_url: 'http://dev.tylershambora.com/images/father-williams.jpg',
+          text: '<!channel>\n\n*Updates for ' + theDate + ':*',
+          attachments: parsedMessages
+        });
+        convo.ask(responses.confirm(bot, channelName, parsedMessages, theDate), [
+          responses.yes(bot, channelName, parsedMessages, theDate),
           responses.no(bot),
           responses.default()
         ]);

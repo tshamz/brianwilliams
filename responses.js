@@ -1,13 +1,8 @@
 module.exports = {
-  preview: function(bot, channelName, parsedMessages) {
-    var titles = parsedMessages.map(function(message) {
-      return message.title;
-    }).join(' + ');
+  confirm: function() {
     return {
-      username: 'Brian Williams: Dev Team News Anchor',
-      icon_url: bot.identity.profile_pic,
-      text: '*I\'m about to post the following:*',
-      attachments: parsedMessages.push({
+      text: 'Would you like to proceed?',
+      attachments: [{
         fallback: '*YES* to confirm',
         text: '*YES* to confirm',
         color: 'good',
@@ -17,7 +12,7 @@ module.exports = {
         text: '*NO* to abort',
         color: 'danger',
         mrkdwn_in: ['fallback', 'text']
-      })
+      }]
     };
   },
   yes: function(bot, channelName, parsedMessages, date) {
@@ -28,7 +23,7 @@ module.exports = {
         bot.say({
           channel: '#' + channelName,
           username: 'Brian Williams: Dev Team News Anchor',
-          icon_url: bot.identity.profile_pic,
+          icon_url: 'http://dev.tylershambora.com/images/father-williams.jpg',
           text: '<!channel>\n\n*Updates for ' + date + ':*',
           attachments: parsedMessages
         });
