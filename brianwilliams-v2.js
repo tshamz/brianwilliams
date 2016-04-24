@@ -5,7 +5,7 @@ var moment               = require('moment');
 var Botkit               = require('botkit');
 var responses            = require('./responses.js');
 
-var whitelistedUsers     = ['tyler shambroa', 'daniel lerman'];
+var whitelistedUsers     = ['tyler shambora', 'daniel lerman'];
 var readOnlyChannels     = ['C1317518C'];
 
 
@@ -150,6 +150,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     }
   });
 });
+
 
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
