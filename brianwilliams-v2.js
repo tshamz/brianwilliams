@@ -137,7 +137,7 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 });
 
 controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
-  var goWithChrist = function() {
+  var goWithChrist = (function() {
     bot.api.reactions.add({
       timestamp: message.ts,
       channel: message.channel,
@@ -149,7 +149,7 @@ controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(b
         bot.reply(message, 'go with christ brah.');
       }
     });
-  }();
+  }());
 });
 
 
