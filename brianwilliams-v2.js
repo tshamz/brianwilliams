@@ -169,17 +169,29 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
   }
 });
 
-controller.hears([/[\s\S]*/], ['direct_message, mention, direct_mention'], function(bot, message) {
+controller.on('direct_message,mention,direct_mention',function(bot,message) {
   bot.api.reactions.add({
+    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
     timestamp: message.ts,
     channel: message.channel,
     name: 'jesus',
-    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa'
+  },function(err) {
+    if (err) {
+      console.log(err)
+    }
+    bot.reply(message, 'go with Christ brah.');
+  });
+});
+
+controller.hears([/[\s\S]*/], ['direct_message, mention, direct_mention'], function(bot, message) {
+  bot.api.reactions.add({
+
+
   }, function(err) {
     if (err) {
       console.log(err);
     }
-    bot.reply(message, 'go with Christ brah.');
+
   });
 });
 
