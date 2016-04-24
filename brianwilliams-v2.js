@@ -136,7 +136,7 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
   }
 });
 
-controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
+controller.on('direct_message, mention, direct_mention', function(bot, message) {
   var goWithChrist = (function() {
     bot.api.reactions.add({
       timestamp: message.ts,
