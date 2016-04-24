@@ -175,7 +175,7 @@ controller.on('direct_message,mention,direct_mention',function(bot,message) {
     timestamp: message.ts,
     channel: message.channel,
     name: 'jesus',
-  },function(err) {
+  }, function(err) {
     if (err) {
       console.log(err)
     }
