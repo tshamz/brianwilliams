@@ -137,27 +137,17 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 });
 
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
-  var reaction = {
+  bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
-    name: 'jesus'
-  };
-
-  var count = 0;
-  var goWithChrist = (function() {
-    bot.api.reactions.add(reaction, function(err, response) {
-      if (!response.ok && count <= 5) {
-        console.log('Trying one more time in 2 seconds');
-        setTimeout(goWithChrist, 2000);
-        count++;
-      } else if (!response.ok && count > 5) {
-        console.log('unsuccessful after 5 attempts');
-      } else if (response.ok) {
-        bot.reply(message, 'go with christ brah.');
-      }
-    });
-  }());
-
+    name: 'jesus',
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      bot.reply(message, 'go with christ brah.');
+    }
+  });
 });
 
 
@@ -175,21 +165,21 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
       console.log('Attempting to delete the message.' );
 
       // this whole block looks pretty ripe for some abstraction and recursion (tsham)
-      var count = 0;
-      var deleteMessage = (function() {
-        bot.api.chat.delete(options, function(err, response) {
-          if (!response.ok && count <= 5) {
-            console.log('Unable to delete due to error: ' + err);
-            console.log('Trying one more time in 2 seconds');
-            setTimeout(deleteMessage, 2000);
-            count++;
-          } else if (!response.ok && count > 5) {
-            console.log('unsuccessful after 5 attempts');
-          } else if (response.ok) {
-            console.log('Message successfully deleted!');
-          }
-        });
-      }());
+      bot.api.chat.delete(options, function(err, response) {
+        if (!response.ok) {
+          console.log('Unable to delete due to error: ' + err);
+          console.log('Trying one more time in 2 seconds');
+          setTimeout(function() {
+            bot.api.chat.delete(options, function(err, response) {
+              if (!response.ok) {
+                console.log('Unable to delete after a second attempt due to error: ' + err);
+              }
+            });
+          }, 2000);
+        } else {
+          console.log('Message successfully deleted!');
+        }
+      });
     });
   }
 });
