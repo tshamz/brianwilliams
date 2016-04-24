@@ -127,9 +127,9 @@ controller.hears([/post to (\S+)\n([\s\S]*)/], 'direct_message', function(bot, m
 });
 
 controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
-  var validateName = getRealNameFromId(bot, message.user);
+  var validUser = getRealNameFromId(bot, message.user).then(isValidUser);
   bot.reply(message, 'Hello!');
-  if (validateName) {
+  if (validUser) {
     bot.reply(message, 'Hey! You\'re pretty valid!');
   }
 });
