@@ -48,6 +48,7 @@ bot.startRTM(function(err) {
 
 
 
+
 // Helper Functions ===============================================
 
 var getRealNameFromId = function(bot, userId) {
