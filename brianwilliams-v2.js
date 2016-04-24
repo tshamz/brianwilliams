@@ -169,8 +169,7 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
   }
 });
 
-controller.on('direct_message, mention, direct_mention', function(bot, message) {
-  console.log('ding');
+controller.hears([/[\s\S]*/], ['direct_message, mention, direct_mention'], function(bot, message) {
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
@@ -179,7 +178,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     if (err) {
       console.log(err);
     }
-    bot.reply(message, 'go with Christ, brah.');
+    bot.reply(message, 'go with Christ brah.');
   });
 });
 
