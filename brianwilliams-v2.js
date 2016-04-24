@@ -136,6 +136,21 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
   }
 });
 
+controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
+  bot.api.reactions.add({
+    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
+    timestamp: message.ts,
+    channel: message.channel,
+    name: 'jesus',
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    }
+    bot.reply(message, 'go with christ brah.');
+  });
+});
+
+
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
     getRealNameFromId(bot, message.user).then(function(realName) {
@@ -167,20 +182,6 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
       });
     });
   }
-});
-
-controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
-  bot.api.reactions.add({
-    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
-    timestamp: message.ts,
-    channel: message.channel,
-    name: 'jesus',
-  }, function(err) {
-    if (err) {
-      console.log(err);
-    }
-    bot.reply(message, 'go with christ brah.');
-  });
 });
 
 controller.on('rtm_open', function(bot) {
