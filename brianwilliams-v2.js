@@ -131,7 +131,7 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
     .then(isValidUser)
     .then(function(result) {
       bot.reply(message, 'Hello!');
-      if (validateName) {
+      if (result) {
         bot.reply(message, 'Hey! You\'re pretty valid!');
       }
     });
