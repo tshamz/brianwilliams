@@ -149,7 +149,7 @@ controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(b
         bot.reply(message, 'go with christ brah.');
       }
     });
-  }
+  }();
 });
 
 
