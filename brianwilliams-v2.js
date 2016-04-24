@@ -82,7 +82,7 @@ var isValidUser = function(realName) {
 
 // Listeners  ===============================================
 
-controller.hears([/post to (\S+) ([\s\S]*)/], 'direct_message', function(bot, message) {
+controller.hears([/post to (\S+)\n([\s\S]*)/], 'direct_message', function(bot, message) {
   var channelName = message.match[1];
   var update = message.match[2];
 
@@ -153,7 +153,7 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
     getRealNameFromId(bot, message.user).then(function(realName) {
       var options = {
-        token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
+        token: process.env.MEGA_TOKEN,
         ts: message.ts,
         channel: message.channel,
         as_user: true
