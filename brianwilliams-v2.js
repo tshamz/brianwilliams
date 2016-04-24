@@ -137,17 +137,19 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 });
 
 controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
-  console.log('hello?');
-  bot.api.reactions.add({
-    timestamp: message.ts,
-    channel: message.channel,
-    name: 'jesus',
-  }, function(err) {
-    if (err) {
-      console.log(err);
-    }
-    bot.reply(message, 'go with christ brah.');
-  });
+  var goWithChrist = function() {
+    bot.api.reactions.add({
+      timestamp: message.ts,
+      channel: message.channel,
+      name: 'jesus',
+    }, function(err) {
+      if (err) {
+        setTimeout(goWithChrist, 2000);
+      } else {
+        bot.reply(message, 'go with christ brah.');
+      }
+    });
+  }
 });
 
 
