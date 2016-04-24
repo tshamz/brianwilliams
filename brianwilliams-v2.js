@@ -169,18 +169,20 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
   }
 });
 
-controller.on('direct_message,mention,direct_mention',function(bot,message) {
-  bot.api.reactions.add({
-    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
-    timestamp: message.ts,
-    channel: message.channel,
-    name: 'jesus',
-  }, function(err) {
-    if (err) {
-      console.log(err)
-    }
-    bot.reply(message, 'go with Christ brah.');
-  });
+controller.on('direct_message, mention, direct_mention', function(bot, message) {
+  setTimeout(function() {
+    bot.api.reactions.add({
+      token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
+      timestamp: message.ts,
+      channel: message.channel,
+      name: 'jesus',
+    }, function(err) {
+      if (err) {
+        console.log(err);
+      }
+      bot.reply(message, 'go with christ brah.');
+    });
+  }, 2000)
 });
 
 controller.on('rtm_open', function(bot) {
@@ -190,6 +192,3 @@ controller.on('rtm_open', function(bot) {
 controller.on('rtm_close', function() {
   console.log('** The RTM api just closed');
 });
-
-
-
