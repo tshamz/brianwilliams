@@ -137,19 +137,30 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 });
 
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
-  var goWithChrist = (function() {
-    bot.api.reactions.add({
-      timestamp: message.ts,
-      channel: message.channel,
-      name: 'jesus',
-    }, function(err) {
-      if (err) {
-        setTimeout(goWithChrist, 2000);
-      } else {
-        bot.reply(message, 'go with christ brah.');
-      }
-    });
-  }());
+  bot.api.reactions.add({
+    timestamp: message.ts,
+    channel: message.channel,
+    name: 'jesus',
+  }, function(err) {
+    if (err) {
+      setTimeout(goWithChrist, 2000);
+    } else {
+      bot.reply(message, 'go with christ brah.');
+    }
+  });
+  // var goWithChrist = (function() {
+  //   bot.api.reactions.add({
+  //     timestamp: message.ts,
+  //     channel: message.channel,
+  //     name: 'jesus',
+  //   }, function(err) {
+  //     if (err) {
+  //       setTimeout(goWithChrist, 2000);
+  //     } else {
+  //       bot.reply(message, 'go with christ brah.');
+  //     }
+  //   });
+  // }());
 });
 
 
