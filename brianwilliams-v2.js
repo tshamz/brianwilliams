@@ -137,8 +137,8 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 });
 
 controller.hears(['yo'], ['direct_message, mention, direct_mention'], function(bot, message) {
+  console.log('hello?');
   bot.api.reactions.add({
-    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa',
     timestamp: message.ts,
     channel: message.channel,
     name: 'jesus',
