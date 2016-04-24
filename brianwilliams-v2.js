@@ -183,18 +183,6 @@ controller.on('direct_message,mention,direct_mention',function(bot,message) {
   });
 });
 
-controller.hears([/[\s\S]*/], ['direct_message, mention, direct_mention'], function(bot, message) {
-  bot.api.reactions.add({
-
-
-  }, function(err) {
-    if (err) {
-      console.log(err);
-    }
-
-  });
-});
-
 controller.on('rtm_open', function(bot) {
   console.log('** The RTM api just connected: ' + bot.identity.name);
 });
