@@ -87,7 +87,7 @@ controller.hears([/post to (\S+)\n([\s\S]*)/], 'direct_message', function(bot, m
   var update = message.match[2];
 
   var parsedMessages = update.split('\n\n').map(function(block) {
-    var messageParts = block.split('\n');
+    var messageParts = block.split('\n---\n');
     return {
       fallback: messageParts[1],
       title: messageParts[0],
