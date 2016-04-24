@@ -139,6 +139,8 @@ controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_m
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
 
+    console.log(message);
+
     var messageText = message.text;
     var options = {
       token: 'xoxp-2334831841-2335988250-36830721557-bd1498f3a8',
@@ -170,12 +172,12 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
-    name: 'shakabra'
+    name: 'jesus'
   }, function(err) {
     if (err) {
       console.log(err);
     }
-    bot.reply(message, 'shaka brah');
+    bot.reply(message, 'go with Christ, brah.');
   });
 });
 
