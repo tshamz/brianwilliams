@@ -126,16 +126,16 @@ controller.hears([/post to (\S+)\n([\s\S]*)/], 'direct_message', function(bot, m
   });
 });
 
-controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
-  getRealNameFromId(bot, message.user)
-    .then(isValidUser)
-    .then(function(result) {
-      bot.reply(message, 'Hello!');
-      if (result) {
-        bot.reply(message, 'Hey! You\'re pretty valid!');
-      }
-    });
-});
+// controller.hears(['hello', 'hi', 'hey'], ['direct_message', 'mention', 'direct_mention'], function(bot, message) {
+//   getRealNameFromId(bot, message.user)
+//     .then(isValidUser)
+//     .then(function(result) {
+//       bot.reply(message, 'Hello!');
+//       if (result) {
+//         bot.reply(message, 'Hey! You\'re pretty valid!');
+//       }
+//     });
+// });
 
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
   bot.api.reactions.add({
@@ -150,9 +150,6 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     }
   });
 });
-
-
-
 
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
