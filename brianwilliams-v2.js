@@ -143,7 +143,8 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
     name: 'jesus',
   }, function(err) {
     if (err) {
-      setTimeout(goWithChrist, 2000);
+      // setTimeout(goWithChrist, 2000);
+      console.log(err);
     } else {
       bot.reply(message, 'go with christ brah.');
     }
