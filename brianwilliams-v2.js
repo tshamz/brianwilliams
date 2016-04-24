@@ -173,7 +173,8 @@ controller.hears([/[\s\S]*/], ['direct_message, mention, direct_mention'], funct
   bot.api.reactions.add({
     timestamp: message.ts,
     channel: message.channel,
-    name: 'jesus'
+    name: 'jesus',
+    token: 'xoxp-2334831841-2879044713-36141744340-1e52c0bdaa'
   }, function(err) {
     if (err) {
       console.log(err);
