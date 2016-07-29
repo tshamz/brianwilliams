@@ -1,2 +1,2 @@
-# newsflash-walter-cronkite
-A Slackbot deployment to heroku
+# Son of Brian Williams, Brian Williams v2.0
+A Slackbot deployment to heroku, or something. whatever.
