@@ -25,7 +25,7 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  scopes: ['bot', 'chat:write:user']
+  scopes: ['bot', 'chat:write:user', 'chat:write:bot']
 });
 
 controller.setupWebserver(process.env.PORT, function(err, webserver) {
@@ -63,6 +63,23 @@ controller.on('create_bot', function(bot, config) {
         }
       });
     });
+  }
+});
+
+controller.storage.teams.all(function(err, teams) {
+  if (err) {
+    throw new Error(err);
+  }
+  for (var t in teams) {
+    if (teams[t].bot) {
+      controller.spawn(teams[t]).startRTM(function(err, bot) {
+        if (err) {
+          console.log('Error connecting bot to Slack:',err);
+        } else {
+          trackBot(bot);
+        }
+      });
+    }
   }
 });
 
