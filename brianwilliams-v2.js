@@ -43,23 +43,13 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
   });
 });
 
-// var bot = controller.spawn({
-//   token: process.env.BOT_TOKEN
-// });
-
-// bot.startRTM(function(err) {
-//   if (err) {
-//     console.log('Even if you fall on your face, you\'re still moving forward.');
-//     throw new Error(err);
-//   }
-// });
-
 var _bots = {};
 var trackBot = function(bot) {
   _bots[bot.config.token] = bot;
 };
 
 controller.on('create_bot', function(bot, config) {
+  console.log(bot);
   console.log(config);
   if (_bots[bot.config.token]) {
     // already online! do nothing.
@@ -71,8 +61,6 @@ controller.on('create_bot', function(bot, config) {
       bot.startPrivateConversation({user: config.createdBy},function(err, convo) {
         if (err) {
           console.log(err);
-        } else {
-
         }
       });
     });
