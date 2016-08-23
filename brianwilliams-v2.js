@@ -72,7 +72,7 @@ controller.on('create_bot', function(bot, config) {
         if (err) {
           console.log(err);
         } else {
-          convo.say(responses.welcome);
+          convo.say('Hi! I'm here!);
         }
       });
     });
