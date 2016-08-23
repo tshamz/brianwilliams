@@ -25,7 +25,7 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  scopes: ['bot']
+  scopes: ['bot', 'chat:write:user']
 });
 
 controller.setupWebserver(process.env.PORT, function(err, webserver) {
@@ -39,6 +39,8 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
       res.status(500).send('ERROR: ' + err);
     } else {
       res.send('Great Success!');
+      console.log(req);
+      console.log(res);
     }
   });
 });
