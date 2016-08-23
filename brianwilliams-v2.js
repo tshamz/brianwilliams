@@ -39,23 +39,45 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
       res.status(500).send('ERROR: ' + err);
     } else {
       res.send('Great Success!');
-      console.log(req);
-      console.log(res);
     }
   });
 });
 
-var bot = controller.spawn({
-  token: process.env.BOT_TOKEN
-});
+// var bot = controller.spawn({
+//   token: process.env.BOT_TOKEN
+// });
 
-bot.startRTM(function(err) {
-  if (err) {
-    console.log('Even if you fall on your face, you\'re still moving forward.');
-    throw new Error(err);
+// bot.startRTM(function(err) {
+//   if (err) {
+//     console.log('Even if you fall on your face, you\'re still moving forward.');
+//     throw new Error(err);
+//   }
+// });
+
+var _bots = {};
+var trackBot = function(bot) {
+  _bots[bot.config.token] = bot;
+};
+
+controller.on('create_bot', function(bot, config) {
+  console.log(config);
+  if (_bots[bot.config.token]) {
+    // already online! do nothing.
+  } else {
+    bot.startRTM(function(err) {
+      if (!err) {
+        trackBot(bot);
+      }
+      bot.startPrivateConversation({user: config.createdBy},function(err, convo) {
+        if (err) {
+          console.log(err);
+        } else {
+          convo.say(responses.welcome);
+        }
+      });
+    });
   }
 });
-
 
 
 // Helper Functions ===============================================
