@@ -49,7 +49,6 @@ var trackBot = function(bot) {
 };
 
 controller.on('create_bot', function(bot, config) {
-  console.log(bot);
   console.log(config);
   if (_bots[bot.config.token]) {
     // already online! do nothing.
