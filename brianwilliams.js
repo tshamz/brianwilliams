@@ -9,7 +9,6 @@ var whitelistedUsers     = ['tyler shambora', 'daniel lerman', 'ryan little', 'c
 var readOnlyChannels     = ['C1317518C'];
 
 
-
 // Init ===============================================
 
 if (!process.env.BOT_TOKEN) {
@@ -84,7 +83,6 @@ var isValidUser = function(realName) {
   }));
   return deferred.promise;
 };
-
 
 
 // Listeners  ===============================================
