@@ -43,43 +43,14 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
   });
 });
 
-var _bots = {};
-var trackBot = function(bot) {
-  _bots[bot.config.token] = bot;
-};
-
-controller.on('create_bot', function(bot, config) {
-  console.log(config);
-  if (_bots[bot.config.token]) {
-    // already online! do nothing.
-  } else {
-    bot.startRTM(function(err) {
-      if (!err) {
-        trackBot(bot);
-      }
-      bot.startPrivateConversation({user: config.createdBy},function(err, convo) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    });
-  }
+var bot = controller.spawn({
+  token: process.env.BOT_TOKEN
 });
 
-controller.storage.teams.all(function(err, teams) {
+bot.startRTM(function(err) {
   if (err) {
+    console.log('Even if you fall on your face, you\'re still moving forward.');
     throw new Error(err);
-  }
-  for (var t in teams) {
-    if (teams[t].bot) {
-      controller.spawn(teams[t]).startRTM(function(err, bot) {
-        if (err) {
-          console.log('Error connecting bot to Slack:',err);
-        } else {
-          trackBot(bot);
-        }
-      });
-    }
   }
 });
 
