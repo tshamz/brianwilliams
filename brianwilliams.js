@@ -46,11 +46,18 @@ var bot = controller.spawn({
   token: process.env.BOT_TOKEN
 });
 
-bot.startRTM(function(err) {
-  if (err) {
-    console.log('Even if you fall on your face, you\'re still moving forward.');
-    throw new Error(err);
-  }
+controller.on('create_bot',function(bot, config) {
+  bot.startRTM(function(err, bot, payload) {
+    console.log('err: ' + err);
+    console.log('bot: ' + bot);
+    console.log('payload: ' + payload);
+    if (err) {
+      console.log('Even if you fall on your face, you\'re still moving forward.');
+      throw new Error(err);
+    } else {
+      console.log(bot.config.token)
+    }
+  });
 });
 
 
