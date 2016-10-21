@@ -203,11 +203,8 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
 
 
 controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
-  console.log('ding');
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
-    console.log('dang');
     getRealNameFromId(bot, message.user).then(function(realName) {
-      console.log('dong: ' + realName);
       var options = {
         token: process.env.MEGA_TOKEN,
         ts: message.ts,
