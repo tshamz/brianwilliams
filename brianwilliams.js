@@ -48,9 +48,9 @@ var bot = controller.spawn({
 
 controller.on('create_bot',function(bot, config) {
   bot.startRTM(function(err, bot, payload) {
-    console.log('err: ' + err);
-    console.log('bot: ' + bot);
-    console.log('payload: ' + payload);
+    console.dir('err: ' + err);
+    console.dir('bot: ' + bot);
+    console.dir('payload: ' + payload);
     if (err) {
       console.log('Even if you fall on your face, you\'re still moving forward.');
       throw new Error(err);
