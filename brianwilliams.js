@@ -42,42 +42,61 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
   });
 });
 
-var _bots = {};
-var trackBot = function(bot) {
-  _bots[bot.config.token] = bot;
-};
-
-controller.on('create_bot',function(bot, config) {
-  if (_bots[bot.config.token]) {
-    // already online! do nothing.
-  } else {
-    bot.startRTM(function(err, bot, payload) {
-      if (err) {
-        console.log('Even if you fall on your face, you\'re still moving forward.');
-        throw new Error(err);
-      } else {
-        trackBot(bot);
-      }
-    });
-  }
+var bot = controller.spawn({
+  token: process.env.BOT_TOKEN
 });
 
-controller.storage.teams.all(function(err, teams) {
+bot.startRTM(function(err) {
   if (err) {
+    console.log('Even if you fall on your face, you\'re still moving forward.');
     throw new Error(err);
   }
-  for (var t in teams) {
-    if (teams[t].bot) {
-      controller.spawn(teams[t]).startRTM(function(err, bot) {
-        if (err) {
-          console.log('Error connecting bot to Slack:',err);
-        } else {
-          trackBot(bot);
-        }
-      });
-    }
-  }
 });
+
+// // USED TO GET THE MEGA ADMIN TOKEN
+// controller.on('create_user',function(bot, user) {
+//   console.log('-----');
+//   console.log('USER TOKEN:');
+//   console.log(user.access_token);
+//   console.log('-----');
+// });
+
+// var _bots = {};
+// var trackBot = function(bot) {
+//   _bots[bot.config.token] = bot;
+// };
+
+// controller.on('create_bot',function(bot, config) {
+//   if (_bots[bot.config.token]) {
+//     // already online! do nothing.
+//   } else {
+//     bot.startRTM(function(err, bot, payload) {
+//       if (err) {
+//         console.log('Even if you fall on your face, you\'re still moving forward.');
+//         throw new Error(err);
+//       } else {
+//         trackBot(bot);
+//       }
+//     });
+//   }
+// });
+
+// controller.storage.teams.all(function(err, teams) {
+//   if (err) {
+//     throw new Error(err);
+//   }
+//   for (var t in teams) {
+//     if (teams[t].bot) {
+//       controller.spawn(teams[t]).startRTM(function(err, bot) {
+//         if (err) {
+//           console.log('Error connecting bot to Slack:',err);
+//         } else {
+//           trackBot(bot);
+//         }
+//       });
+//     }
+//   }
+// });
 
 
 // Helper Functions ===============================================
@@ -183,7 +202,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
 });
 
 
-controller.on('ambient', function(bot, message) {
+controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
   console.log('ding');
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
     console.log('dang');
