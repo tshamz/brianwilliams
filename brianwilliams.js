@@ -46,22 +46,71 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
 //   token: process.env.BOT_TOKEN
 // });
 
-var myBot;
+var _bots = {};
+var trackBot = function(bot) {
+  _bots[bot.config.token] = bot;
+};
+
+controller.on('create_incoming_webhook',function(bot, webhook) {
+  console.log('FIRST:');
+  console.log('------');
+  console.log('WEBHOOK:');
+  console.log(webhook);
+  console.log('-----');
+  console.log('WEBHOOK TOKEN:');
+  console.log(webhook.token);
+});
+
+controller.on('create_user',function(bot, user) {
+  console.log('SECOND:');
+  console.log('-------');
+  console.log('USER:');
+  console.log(user);
+  console.log('-----');
+  console.log('USER TOKEN:');
+  console.log(user.access_token);
+});
+
+controller.on('update_user',function(bot, user) {
+  console.log('THIRD:');
+  console.log('------');
+  console.log('USER:');
+  console.log(user);
+  console.log('-----');
+  console.log('USER TOKEN:');
+  console.log(user.access_token);
+});
 
 controller.on('create_bot',function(bot, config) {
-  // myBot = bot;
+  if (_bots[bot.config.token]) {
+    // already online! do nothing.
+  } else {
+    bot.startRTM(function(err, bot, payload) {
+      if (err) {
+        console.log('Even if you fall on your face, you\'re still moving forward.');
+        throw new Error(err);
+      } else {
+        trackBot(bot);
+      }
+    });
+  }
+});
 
-  bot.startRTM(function(err, bot, payload) {
-    console.dir('err: ' + err);
-    console.dir('bot: ' + bot);
-    console.dir('payload: ' + payload);
-    if (err) {
-      console.log('Even if you fall on your face, you\'re still moving forward.');
-      throw new Error(err);
-    } else {
-      console.log(bot.config.token)
+controller.storage.teams.all(function(err, teams) {
+  if (err) {
+    throw new Error(err);
+  }
+  for (var t in teams) {
+    if (teams[t].bot) {
+      controller.spawn(teams[t]).startRTM(function(err, bot) {
+        if (err) {
+          console.log('Error connecting bot to Slack:',err);
+        } else {
+          trackBot(bot);
+        }
+      });
     }
-  });
+  }
 });
 
 
