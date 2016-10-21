@@ -42,11 +42,15 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
   });
 });
 
-var bot = controller.spawn({
-  token: process.env.BOT_TOKEN
-});
+// var bot = controller.spawn({
+//   token: process.env.BOT_TOKEN
+// });
+
+var myBot;
 
 controller.on('create_bot',function(bot, config) {
+  // myBot = bot;
+
   bot.startRTM(function(err, bot, payload) {
     console.dir('err: ' + err);
     console.dir('bot: ' + bot);
