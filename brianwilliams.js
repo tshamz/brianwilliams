@@ -42,44 +42,10 @@ controller.setupWebserver(process.env.PORT, function(err, webserver) {
   });
 });
 
-// var bot = controller.spawn({
-//   token: process.env.BOT_TOKEN
-// });
-
 var _bots = {};
 var trackBot = function(bot) {
   _bots[bot.config.token] = bot;
 };
-
-controller.on('create_incoming_webhook',function(bot, webhook) {
-  console.log('FIRST:');
-  console.log('------');
-  console.log('WEBHOOK:');
-  console.log(webhook);
-  console.log('-----');
-  console.log('WEBHOOK TOKEN:');
-  console.log(webhook.token);
-});
-
-controller.on('create_user',function(bot, user) {
-  console.log('SECOND:');
-  console.log('-------');
-  console.log('USER:');
-  console.log(user);
-  console.log('-----');
-  console.log('USER TOKEN:');
-  console.log(user.access_token);
-});
-
-controller.on('update_user',function(bot, user) {
-  console.log('THIRD:');
-  console.log('------');
-  console.log('USER:');
-  console.log(user);
-  console.log('-----');
-  console.log('USER TOKEN:');
-  console.log(user.access_token);
-});
 
 controller.on('create_bot',function(bot, config) {
   if (_bots[bot.config.token]) {
@@ -217,7 +183,7 @@ controller.on('direct_message, mention, direct_mention', function(bot, message) 
 });
 
 
-controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'ambient'], function(bot, message) {
+controller.on('ambient', function(bot, message) {
   console.log('ding');
   if (readOnlyChannels.indexOf(message.channel) !== -1) {
     console.log('dang');
