@@ -61,42 +61,42 @@ bot.startRTM(function(err) {
 //   console.log('-----');
 // });
 
-// var _bots = {};
-// var trackBot = function(bot) {
-//   _bots[bot.config.token] = bot;
-// };
+var _bots = {};
+var trackBot = function(bot) {
+  _bots[bot.config.token] = bot;
+};
 
-// controller.on('create_bot',function(bot, config) {
-//   if (_bots[bot.config.token]) {
-//     // already online! do nothing.
-//   } else {
-//     bot.startRTM(function(err, bot, payload) {
-//       if (err) {
-//         console.log('Even if you fall on your face, you\'re still moving forward.');
-//         throw new Error(err);
-//       } else {
-//         trackBot(bot);
-//       }
-//     });
-//   }
-// });
+controller.on('create_bot',function(bot, config) {
+  if (_bots[bot.config.token]) {
+    // already online! do nothing.
+  } else {
+    bot.startRTM(function(err, bot, payload) {
+      if (err) {
+        console.log('Even if you fall on your face, you\'re still moving forward.');
+        throw new Error(err);
+      } else {
+        trackBot(bot);
+      }
+    });
+  }
+});
 
-// controller.storage.teams.all(function(err, teams) {
-//   if (err) {
-//     throw new Error(err);
-//   }
-//   for (var t in teams) {
-//     if (teams[t].bot) {
-//       controller.spawn(teams[t]).startRTM(function(err, bot) {
-//         if (err) {
-//           console.log('Error connecting bot to Slack:',err);
-//         } else {
-//           trackBot(bot);
-//         }
-//       });
-//     }
-//   }
-// });
+controller.storage.teams.all(function(err, teams) {
+  if (err) {
+    throw new Error(err);
+  }
+  for (var t in teams) {
+    if (teams[t].bot) {
+      controller.spawn(teams[t]).startRTM(function(err, bot) {
+        if (err) {
+          console.log('Error connecting bot to Slack:',err);
+        } else {
+          trackBot(bot);
+        }
+      });
+    }
+  }
+});
 
 
 // Helper Functions ===============================================
