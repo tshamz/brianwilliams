@@ -28,6 +28,7 @@ controller.configureSlackApp({
 });
 
 controller.setupWebserver(process.env.PORT, function(err, webserver) {
+  console.log(webserver);
   if (err) {
     throw new Error(err);
   }
