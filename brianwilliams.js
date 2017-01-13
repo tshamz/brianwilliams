@@ -167,7 +167,7 @@ controller.hears([/post to (\S+)\n([\s\S]*)/], 'direct_message', function(bot, m
           attachments: parsedMessages
         });
         convo.ask(responses.confirm(bot, channelName, parsedMessages, theDate), [
-          responses.yes(bot, channelName, parsedMessages, theDate),
+          responses.yes(bot, 'post', {channel:channelName, message:parsedMessages, date:theDate}),
           responses.no(bot),
           responses.default()
         ]);
@@ -188,11 +188,6 @@ controller.hears(['hey mister'], ['direct_message', 'mention', 'direct_mention']
 });
 
 controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, message) {
-  console.log('ding');
-  console.log(message.match[1]);
-  console.log(message.match[1][9]);
-  console.log(message.match[2]);
-  console.log(bot)
   var channelOptions = {
     token: bot.config.token,
     channel: message.match[2],
@@ -215,31 +210,14 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
       bot.startConversation(message, function(err, convo) {
         convo.say('*I\'m about to delete:*');
         convo.say(`https://bva.slack.com/archives/${response.channel.name}/p${message.match[1].replace('.', '')}`);
-        // convo.ask(responses.confirm(bot, channelName, parsedMessages, theDate), [
-        //   responses.yes(bot, channelName, parsedMessages, theDate),
-        //   responses.no(bot),
-        //   responses.default()
-        // ]);
+        convo.ask(responses.confirm(bot, channelName, parsedMessages, theDate), [
+          responses.yes(bot, 'post', deleteOptions),
+          responses.no(bot),
+          responses.default()
+        ]);
       });
     }
   });
-
-  // bot.api.chat.delete(options, function(err, response) {
-  //   if (!response.ok) {
-  //     console.log('Unable to delete due to error: ' + err);
-  //     console.log('Trying one more time in 2 seconds');
-  //     setTimeout(function() {
-  //       bot.api.chat.delete(options, function(err, response) {
-  //         if (!response.ok) {
-  //           console.log('Unable to delete after a second attempt due to error: ' + err);
-  //         }
-  //       });
-  //     }, 2000);
-  //   } else {
-  //     console.log('Message successfully deleted!');
-  //   }
-  // });
-
 });
 
 controller.on('direct_message, mention, direct_mention', function(bot, message) {
