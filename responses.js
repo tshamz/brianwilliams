@@ -29,6 +29,7 @@ module.exports = {
             attachments: options.message
           });
         } else if (action === 'delete') {
+          console.log(options);
           bot.api.chat.delete(options, function(err, response) {
             if (!response.ok) {
               convo.say('Unable to delete due to error: ' + err);
