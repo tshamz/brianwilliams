@@ -245,6 +245,8 @@ controller.hears([/[\s\S]*/], ['direct_message', 'direct_mention', 'mention', 'a
         as_user: true
       };
 
+      console.log(options);
+
       console.log('%s said: "%s"', realName, message.text);
       console.log('Attempting to delete the message.' );
 
