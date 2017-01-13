@@ -28,7 +28,6 @@ controller.configureSlackApp({
 });
 
 controller.setupWebserver(process.env.PORT, function(err, webserver) {
-  console.log(webserver);
   if (err) {
     throw new Error(err);
   }
@@ -189,6 +188,7 @@ controller.hears(['hey mister'], ['direct_message', 'mention', 'direct_mention']
 });
 
 controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, message) {
+  console.log('ding');
   var channelOptions = {
     token: process.env.MEGA_TOKEN,
     channel: message.match[2],
@@ -201,7 +201,7 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
     as_user: true
   };
 
-  bot.api.channel.info(channelOptions, function (err, repsonse) {
+  bot.api.channels.info(channelOptions, function (err, repsonse) {
     if (!response.ok) {
       bot.reply(message, 'incorrect channel id');
     } else {
