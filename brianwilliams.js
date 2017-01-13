@@ -204,6 +204,8 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
   bot.api.channels.info(channelOptions, function (err, response) {
     if (!response.ok) {
       bot.reply(message, 'incorrect channel id');
+    } else if (message.match[1][9] !== '.') {
+      bot.reply(message, 'incorrect time stamp');
     } else {
       bot.startConversation(message, function(err, convo) {
         convo.say('*I\'m about to delete:*');
