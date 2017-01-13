@@ -210,7 +210,7 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
       bot.startConversation(message, function(err, convo) {
         convo.say('*I\'m about to delete:*');
         convo.say(`https://bva.slack.com/archives/${response.channel.name}/p${message.match[1].replace('.', '')}`);
-        convo.ask(responses.confirm(bot, channelName, parsedMessages, theDate), [
+        convo.ask(responses.confirm(bot, deleteOptions), [
           responses.yes(bot, 'post', deleteOptions),
           responses.no(bot),
           responses.default()
