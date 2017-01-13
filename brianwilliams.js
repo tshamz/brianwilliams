@@ -189,6 +189,9 @@ controller.hears(['hey mister'], ['direct_message', 'mention', 'direct_mention']
 
 controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, message) {
   console.log('ding');
+  console.log(message.match[1]);
+  console.log(message.match[1][9]);
+  console.log(message.match[2]);
   var channelOptions = {
     token: process.env.MEGA_TOKEN,
     channel: message.match[2],
