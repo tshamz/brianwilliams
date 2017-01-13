@@ -194,7 +194,7 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
   console.log(message.match[2]);
   console.log(bot)
   var channelOptions = {
-    token: process.env.MEGA_TOKEN,
+    token: bot.config.token,
     channel: message.match[2],
   };
 
