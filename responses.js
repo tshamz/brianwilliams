@@ -26,7 +26,7 @@ module.exports = {
             username: 'Brian Williams: Dev Team News Anchor',
             icon_url: 'http://dev.tylershambora.com/images/father-williams.jpg',
             text: '<!channel>\n\n*Updates for ' + options.date + ':*',
-            attachments: options.messages
+            attachments: options.message
           });
         } else if (action === 'delete') {
           bot.api.chat.delete(options, function(err, response) {
