@@ -201,7 +201,7 @@ controller.hears([/delete (\S+) from (\S+)/], ['direct_message'], function(bot, 
     as_user: true
   };
 
-  bot.api.channels.info(channelOptions, function (err, repsonse) {
+  bot.api.channels.info(channelOptions, function (err, response) {
     if (!response.ok) {
       bot.reply(message, 'incorrect channel id');
     } else {
