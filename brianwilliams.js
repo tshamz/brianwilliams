@@ -5,7 +5,7 @@ var moment               = require('moment');
 var Botkit               = require('botkit');
 var responses            = require('./responses.js');
 
-var whitelistedUsers     = ['tyler shambora', 'daniel lerman', 'ryan little', 'cory cummings'];
+var whitelistedUsers     = ['tyler shambora (4merly six-p-tdrop)', 'daniel lerman', 'ryan little', 'cory cummings'];
 var readOnlyChannels     = ['C1317518C', 'C3G3Y7RFX'];
 
 
