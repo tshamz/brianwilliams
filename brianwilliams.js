@@ -53,13 +53,14 @@ bot.startRTM(function(err) {
   }
 });
 
-// // USED TO GET THE MEGA ADMIN TOKEN
-// controller.on('create_user',function(bot, user) {
-//   console.log('-----');
-//   console.log('USER TOKEN:');
-//   console.log(user.access_token);
-//   console.log('-----');
-// });
+// USED TO GET THE MEGA ADMIN TOKEN
+controller.on('create_user',function(bot, user) {
+  console.log('USED TO GET THE MEGA ADMIN TOKEN');
+  console.log('-----');
+  console.log('USER TOKEN:');
+  console.log(user.access_token);
+  console.log('-----');
+});
 
 var _bots = {};
 var trackBot = function(bot) {
