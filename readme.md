@@ -1,118 +1,84 @@
-# Botkit Starter Kit for Slack Bots
+# brianwilliams.js
 
-This repo contains everything you need to get started building a Slack bot with [Botkit](https://botkit.ai) and [Botkit Studio](https://botkit.ai).
+<p align="center">
+  <img width="100%" src="https://i.imgur.com/Ft6YGfp.jpg" />
+</p>
 
-Botkit is designed to ease the process of designing and running useful, creative bots that live inside messaging platforms. Bots are applications that can send and receive messages, and in many cases, appear alongside their human counterparts as users.
+>brianwilliams is a slackbot who turns Slack channels of your designation into read only channels. This bot is great for things posting team updates to a channel, while ensuring that the posts don't get drowned out by ambient channel noise.
 
-Some bots talk like people, others silently work in the background, while others present interfaces much like modern mobile applications. Botkit gives developers the necessary tools for building bots of any kind! It provides an easy-to-understand interface for sending and receiving messages so that developers can focus on creating novel applications and experiences instead of dealing with API endpoints.
+## Getting Started
 
-Our goal with Botkit is to make bot building easy, fun, and accessible to anyone with the desire to create a future filled with talking machines!
+### Installing
 
-If you are looking to create a bot on other platforms using Glitch, check out the [Botkit project page](https://glitch.com/botkit).
-
-### What's Included
-* [Botkit core](https://github.com/howdyai/botkit/blob/master/docs/readme.md#developing-with-botkit) - a complete programming system for building conversational software
-* [Botkit Studio API](https://github.com/howdyai/botkit/blob/master/docs/readme-studio.md#function-index) - additional APIs that extend Botkit with powerful tools and APIs
-* [Pre-configured Express.js webserver](https://expressjs.com/) including:
-   * A customizable "Install my Bot" homepage
-   * Login and oauth endpoints that allow teams to install your bot
-   * Webhook endpoints for communicating with platforms
-* Sample skill modules that demonstrate various features of Botkit
-* A customizable onboarding experience for new teams powered by Botkit Studio
-
-### Getting Started
-
-There are a myriad of methods you can use to set up an application on Slack, here are some of your options:
-
-#### Use Botkit Studio
-[Botkit Studio](https://studio.botkit.ai/signup?code=slackglitch) is a set of tools that adds capabilities to the open source Botkit library by offering hosted GUI interfaces for script management and action trigger definition. 
-
-While Botkit Studio is *not required* to build a bot using Botkit, we highly recommend it as your bot will be easier to manage, customize and extend.
-
-#### Install Botkit
-
-[Remix this project on Glitch](https://glitch.com/~botkit-slack)
-
-[Deploy to Heroku](https://heroku.com/deploy?template=https://github.com/howdyai/botkit-starter-slack/master)
-
-Clone this repository using Git:
-
-`git clone https://github.com/howdyai/botkit-starter-slack.git`
-
-Install dependencies, including [Botkit](https://github.com/howdyai/botkit):
+1. Create a new Heroku app
+2. Create Slack app
+3. Get Slack bot token, as well as Slack admin/god token
+4. Clone this repo
+5. Push the code up to your Heroku app
+6. Add the following config vars to your heroku app
 
 ```
-cd botkit-starter-slack
-npm install
+BOT_TOKEN
+CLIENT_ID
+CLIENT_SECRET
+MEGA_TOKEN
+READ_ONLY_CHANNELS
+WHITELIST_USERS
 ```
 
-#### Set up your Slack Application 
-Once you have setup your Botkit development enviroment, the next thing you will want to do is set up a new Slack application via the [Slack developer portal](https://api.slack.com/). This is a multi-step process, but only takes a few minutes. 
+where:
+- `BOT_TOKEN` is the bot's token from your Slack app
+- `CLIENT_ID` is the client id from your Slack app
+- `CLIENT_SECRET` is the client secret from your Slack app
+- `MEGA_TOKEN` is the admin/god token of an admin user in Slack
+- `READ_ONLY_CHANNELS` are the channel ids of channels you want the bot to keep as read-only (separated by commas)
+- `WHITELIST_USERS` is the downcased first and last name ("first last", no quotes) of users that can post through the bot to the read only channels (separated by commas)
 
-* [Read this step-by-step guide](https://github.com/howdyai/botkit/blob/master/docs/slack-events-api.md) to make sure everything is set up. 
+Once you've finished all the prior steps and deployed your bot to your Heroku server, visit http://[YOUR HEROKU APP URL].com/login to authenticate your bot. Once you've completed the authentication process, the bot should be a part of your team. Add people to your whitelist who are allowed to talk to the bot and channels that you'd like to make read only.
 
-* We also have this [handy video walkthrough](https://youtu.be/us2zdf0vRz0) for setting up this project with Glitch.
+## Example Message
 
-Next, get a Botkit Studio token [from your Botkit developer account](https://studio.botkit.ai/) if you have decided to use Studio. 
-
-Update the `.env` file with your newly acquired tokens.
-
-Launch your bot application by typing:
-
-`node .`
-
-Now, visit your new bot's login page: http://localhost:3000/login
-
-Now comes the fun part of [making your bot!](https://github.com/howdyai/botkit/blob/master/docs/readme.md#basic-usage)
-
-
-### Extend This Starter kit
-
-This starter kit is designed to provide developers a robust starting point for building a custom bot. Included in the code are a set of sample bot "skills" that illustrate various aspects of the Botkit SDK features.  Once you are familiar with how Botkit works, you may safely delete all of the files in the `skills/` subfolder.
-
-Developers will build custom features as modules that live in the `skills/` folder. The main bot application will automatically include any files placed there.
-
-A skill module should be in the format:
+While the channels are read-only and all messages are immediately deleted, the bot is allowed to post to the channel and he won't delete his own posts. This is useful if you want to make a designated announcements channel that the bot can post to but everyone else's messages are deleted as to not distract from the announcements the bot posts. In order to post to a read-only channel via. the bot, send him a message with this format:
 
 ```
-module.exports = function(controller) {
-
-    // add event handlers to controller
-    // such as hears handlers that match triggers defined in code
-    // or controller.studio.before, validate, and after which tie into triggers
-    // defined in the Botkit Studio UI.
-
-}
+post to [channel name]
+[post title]
+___
+[post message]
 ```
 
-Continue your journey to becoming a champion botmaster by [reading the Botkit Studio SDK documentation here.](https://github.com/howdyai/botkit/blob/master/docs/readme-studio.md)
+for example:
+
+```
+post to dev-updates
+test/ directories comin’ atcha1
+___
+yo, be on the lookout for a `test/` directory starting to make it’s way into your project roots. Don’t be alarmed, it’s supposed to be there, just don’t touch or delete it or else I’ll be rly rly mad. Also, it should be ignored by git, so if you see it making its way into your commits, *DON’T COMMIT IT*. In the very near future you’ll be getting more info on wha this directory is and what it does. Stay turned for more details.
+```
+
+You can use message formatting in the post message, and if you want create a post with two separate title/message combos, separate them with three line breaks like so:
+
+```
+post to dev-updates
+Message Title One
+___
+Message body one
 
 
-### Customize Storage
+Message Title Two
+___
+Message body two
+```
 
-By default, the starter kit uses a simple file-system based storage mechanism to record information about the teams and users that interact with the bot. While this is fine for development, or use by a single team, most developers will want to customize the code to use a real database system.
+## Built With
 
-There are [Botkit plugins for all the major database systems](https://github.com/howdyai/botkit/blob/master/docs/readme-middlewares.md#storage-modules) which can be enabled with just a few lines of code.
+* [Botkit](https://github.com/howdyai/botkit)
+* [slack api](https://api.slack.com/)
 
-We have enabled our [Mongo middleware]() for starters in this project. To use your own Mongo database, just fill out `MONGO_URI` in your `.env` file with the appropriate information. For tips on reading and writing to storage, [check out these medium posts](https://botkit.groovehq.com/knowledge_base/categories/build-a-bot)
+## Authors
 
-# Developer & Support Community
+* **Tyler Shambora** - [tshamz](https://github.com/tshamz)
 
-You can find full documentation for Botkit on our [GitHub page](https://github.com/howdyai/botkit/blob/master/readme.md). Botkit Studio users can access the [Botkit Studio Knowledge Base](https://botkit.groovehq.com/help_center) for help in managing their account.
+## License
 
-###  Need more help?
-* Glitch allows users to ask the community for help directly from the editor! For more information on raising your hand, [read this blog post.](https://medium.com/glitch/just-raise-your-hand-how-glitch-helps-aa6564cb1685)
-
-* Join our thriving community of Botkit developers and bot enthusiasts at large. Over 4500 members strong, [our open Slack group](http://community.botkit.ai) is _the place_ for people interested in the art and science of making bots. 
-
- Come to ask questions, share your progress, and commune with your peers!
-
-* We also host a [regular meetup and annual conference called TALKABOT.](http://talkabot.ai) Come meet and learn from other bot developers! 
- 
- [Full video of our 2016 event is available on Youtube.](https://www.youtube.com/playlist?list=PLD3JNfKLDs7WsEHSal2cfwG0Fex7A6aok)
-
-
-
-# About Botkit
-
-Botkit is a product of [Howdy](https://howdy.ai) and made in Austin, TX with the help of a worldwide community of botheads.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
