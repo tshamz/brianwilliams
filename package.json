@@ -4,13 +4,16 @@
   "description": "A starter kit for building a custom Slack bot with Botkit Studio",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "watch": "nodemon --watch ./"
+  },
+  "engines": {
+    "node": ">=8.9.4"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "botkit": "^0.6.7",
     "botkit-storage-mongo": "^1.0.6",
-    "botkit-studio-metrics": "^0.0.2",
     "cookie-parser": "^1.4.3",
     "debug": "^2.3.3",
     "express": "^4.14.0",
@@ -20,7 +23,9 @@
     "request": "^2.79.0",
     "wordfilter": "^0.2.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.14.12"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/howdyai/botkit-starter-slack.git"
