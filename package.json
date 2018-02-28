@@ -1,15 +1,23 @@
 {
   "name": "son-of-brianwilliams",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Second time's a charm...right guys???",
-  "main": "brianwilliams-v2.js",
+  "main": "brianwilliams.js",
+  "engines": {
+    "node": ">=8.9.4"
+  },
   "dependencies": {
     "botkit": "0.0.15",
+    "dotenv": "^5.0.0",
     "moment": "^2.12.0",
     "q": "^1.4.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "foreman": "^2.0.0",
+    "nodemon": "^1.14.12"
+  },
   "scripts": {
+    "watch": "nodemon --watch ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
