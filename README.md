@@ -1,7 +1,7 @@
 # brianwilliams.js
 
 <p align="center">
-  <img width="100%" src="http://media3.s-nbcnews.com/i/newscms/2014_16/323536/140414-nn-bwnashville-1_2179035f104bd51be370fbe3c403ce6f.jpg" />
+  <img width="100%" src="https://i.imgur.com/Ft6YGfp.jpg" />
 </p>
 
 >brianwilliams is a slackbot who turns Slack channels of your designation into read only channels. This bot is great for things posting team updates to a channel, while ensuring that the posts don't get drowned out by ambient channel noise.
